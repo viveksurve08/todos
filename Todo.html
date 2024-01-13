@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .todo-input {
+      display: flex;
+    }
+
+    .todo-input input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .todo-input button {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .todo-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .todo-list li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .todo-list li input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .todo-list li span {
+      flex-grow: 1;
+    }
+
+    .todo-list li button {
+      padding: 5px;
+      font-size: 12px;
+      border: none;
+      background-color: #f44336;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header">Todo List</h1>
+    <div class="todo-input">
+      <input type="text" id="todoInput" placeholder="Enter a task" />
+      <button id="addButton">Add</button>
+    </div>
+    <ul class="todo-list" id="todoList"></ul>
+  </div>
+
+  <script>
+    // Get references to the input and list
+    const todoInput = document.getElementById('todoInput');
+    const todoList = document.getElementById('todoList');
+
+    // Add button click event listener
+    document.getElementById('addButton').addEventListener('click', () => {
+      const todoText = todoInput.value;
+      if (todoText) {
+        // Create a new list item
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <input type="checkbox" />
+          <span>${todoText}</span>
+          <button class="deleteButton">Delete</button>
+        `;
+        todoList.appendChild(li);
+        todoInput.value = '';
+
+        // Delete button click event listener for the new list item
+        li.querySelector('.deleteButton').addEventListener('click', () => {
+          li.remove();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
