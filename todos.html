@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      #todoInput {
+        padding: 10px;
+        font-size: 16px;
+        width: 300px;
+        margin-bottom: 10px;
+      }
+
+      #addButton {
+        padding: 10px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      #addButton:hover {
+        background-color: #45a049;
+      }
+
+      #todoList {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      #todoList li {
+        margin-bottom: 5px;
+      }
+
+      /* ...existing styles... */
+
+      #addButton {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        display: block; /* Added */
+        margin: 0 auto; /* Added */
+      }
+
+      #addButton:hover {
+        background-color: #45a049;
+      }
+
+      #addButton:active {
+        background-color: #408240;
+      }
+
+      #addButton:focus {
+        outline: none;
+        box-shadow: 0 0 3px 3px rgba(76, 175, 80, 0.3);
+      }
+
+      /* Additional Styles */
+
+      #todoInput,
+      #addButton {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #todoInput {
+        border: 1px solid #ccc;
+      }
+
+      #todoList {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      #todoList li {
+        background-color: #fff;
+        padding: 5px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="todoInput" type="text" placeholder="Enter a todo" />
+    <button id="addButton">Add</button>
+    <ul id="todoList"></ul>
+    <!-- <script src="script.js"></script> -->
+
+    <script>
+      //Get references to HTML elements
+
+      const todoInput = document.getElementById("todoInput");
+      const addButton = document.getElementById("addButton");
+      const todoList = document.getElementById("todoList");
+
+      //Set up an event listener
+
+      addButton.addEventListener("click", addTodo);
+
+      //Create a function to add a new todo
+
+      function addTodo() {
+        const todoText = todoInput.ariaValueMax;
+        if (todoText) {
+          const li = document.createElement("li");
+          li.textContent = todoText;
+          todoList.appendChild(li);
+          todoInput.value = "";
+        }
+      }
+
+      // Add button click event listener
+      document.getElementById("addButton").addEventListener("click", () => {
+        const todoText = todoInput.value;
+        if (todoText) {
+          // Create a new list item
+          const li = document.createElement("li");
+          li.innerHTML = `
+          <input type="checkbox" />
+          <span>${todoText}</span>
+          <button class="deleteButton">Delete</button>
+        `;
+          todoList.appendChild(li);
+          todoInput.value = "";
+
+          //Add functionality to mark todos as complete
+
+          todoList.addEventListener("click", function (event) {
+            if (event.target.tagName === "LI") {
+              event.target.classList.toggle("completed");
+            }
+          });
+
+          //Implement the ability to delete todos
+
+          todoList.addEventListener("click", function (event) {
+            if (event.target.tagName === "BUTTON") {
+              const li = event.target.parentNode;
+              todoList.removeChild(li);
+            }
+          });
+
+          //Store todos in an array
+
+          const todos = [];
+          function addTodo() {
+            const todoText = todoInput.value;
+            if (todoText) {
+              const todo = {
+                text: todoText,
+                completed: false,
+              };
+              todos.push(todo);
+
+              const li = document.createElement("li");
+              li.textContent = todoText;
+              todoList.appendChild(li);
+              todoInput.value = "";
+            }
+          }
+
+          //Display stored on page load
+
+          window.addEventListener("load", function () {
+            for (const todo of todos) {
+              const li = this.document.createElement("li");
+              li.textContent = todo.text;
+              if (todo.completed) {
+                li.classList.add("completed");
+              }
+              todoList.appendChild(li);
+            }
+          });
+
+          li.querySelector(".deleteButton").addEventListener("click", () => {
+            li.remove();
+          });
+        }
+      });
+
+      //Optional: Use localStorage for data persistence
+
+      // const localstore = JSON.parse(localStorage.getItem("localstore")) || [];
+      // function addTodo() {
+      //   const localstore = [];
+      //   function addTodo() {
+      //     const todoText = todoInput.value;
+      //     if (todoText) {
+      //       const todo = {
+      //         text: todoText,
+      //         completed: false,
+      //       };
+      //       localstore.push(todo);
+
+      //       const li = document.createElement("li");
+      //       li.textContent = todoText;
+      //       todoList.appendChild(li);
+      //       todoInput.value = "";
+      //     }
+      //     localStorage.setItem('localstore',JSON.stringify(localstore));
+      //   }
+      //   window.addEventListener('load', function(){
+      //     window.addEventListener("load", function () {
+      //         for (const todo of localstore) {
+      //           const li = this.document.createElement("li");
+      //           li.textContent = todo.text;
+      //           if (todo.completed) {
+      //             li.classList.add("completed");
+      //           }
+      //           todoList.appendChild(li);
+      //         }
+      //       });
+      //   })
+      // }
+    </script>
+  </body>
+</html>
